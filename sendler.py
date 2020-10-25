@@ -1,13 +1,20 @@
 from vk_api import VkApi
 import random
-from main import DialogFlow
 
 
 class Sendler:
+    """
+    Приветствую и уважаю, 
+    Этот класс нужен для отправки сообщений через vk_api
+    В словарь message нужно заносить данные для отправки 
+    вконктате. Процесс запуска фукнций указан в функции 
+    procces. Поэтому нужно смотреть. self.obj это обьект 
+    который присылает вконтакте. Можно посмотреть в 
+    документации, что там есть, а можно распечатать на 
+    экран. Я дарю вам этот выбор.
+    С любовью, Булат Зарипов
+    """
     def __init__(self, token):
-        DIALOGFLOW_PROJECT_ID = 'small-talk-247f9'
-        SESSION_ID = '81a90796dca522008b59527e4404ae8a517214c7'
-        self.df = DialogFlow(DIALOGFLOW_PROJECT_ID, SESSION_ID)
         self.session = VkApi(token=token)
         self.api = self.session.get_api()
 
@@ -21,11 +28,12 @@ class Sendler:
 
     def generate_answer(self):
         self.message = dict()
-        self.message['message'] = self.df.give_answer(self.obj['body'])
+        self.message['message'] = self.make_text()
         self.message['user_id'] = self.obj['user_id']
         self.message['random_id'] = random.getrandbits(64)
-        if not self.message['message']:
-            self.message['message'] = 'Я тебя не понял...'
+
+    def make_text(self):
+        return self.obj['body']
 
     def send_message(self):
         self.api.messages.send(**self.message)
