@@ -21,3 +21,9 @@ class Message:
 		message['keyboard'] = self.keyboard
 		message['attachment'] = self.attachment
 		return message
+
+	def from_longpoll(self, obj):
+		pass
+
+	def from_callback(self, obj):
+		pass
