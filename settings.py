@@ -1,2 +1,2 @@
-vk_token = 'Your vk token for sending messages'
-vk_access_token = 'Your access token for callback api'
+vk_token = 'Your_vk_token_for_sending_messages'
+vk_access_token = 'Your_access_token_for_callback_api'
