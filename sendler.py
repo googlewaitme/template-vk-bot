@@ -1,5 +1,5 @@
 from vk_api import VkApi
-import random
+from commands_loader import CommandsLoader 
 
 
 class Sendler:
@@ -17,6 +17,7 @@ class Sendler:
     def __init__(self, token):
         self.session = VkApi(token=token)
         self.api = self.session.get_api()
+        self.commands = CommandsLoader().give_commands()
 
     def process(self, obj):
         self.set_object(obj)
@@ -27,13 +28,11 @@ class Sendler:
         self.obj = obj
 
     def generate_answer(self):
-        self.message = dict()
-        self.message['message'] = self.make_text()
-        self.message['user_id'] = self.obj['user_id']
-        self.message['random_id'] = random.getrandbits(64)
-
-    def make_text(self):
-        return self.obj['body']
+        for command in self.commands:
+            if command.is_trigger(self.obj):
+                self.message = command.create_answer_message(self.obj)
+                break
 
     def send_message(self):
-        self.api.messages.send(**self.message)
+        dt = self.message.get_dict()
+        self.api.messages.send(**dt)
