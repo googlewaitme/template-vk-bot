@@ -18,6 +18,7 @@ class Sendler:
         self.session = VkApi(token=token)
         self.api = self.session.get_api()
         self.commands = CommandsLoader().give_commands()
+        self.message = None
 
     def process(self, incomming_message):
         self.set_incomming_message(incomming_message)
@@ -34,5 +35,7 @@ class Sendler:
                 break
 
     def send_message(self):
+        if not self.message:
+            return
         dt = self.message.get_dict()
         self.api.messages.send(**dt)

@@ -6,9 +6,10 @@ keyboard = BotKeyboard()
 
 class Command:
 	def __init__(self):
-		self.triggers = ['help me']
-		self.text = 'That example command'
+		self.triggers = ['пример триггера']
+		self.text = 'Пример команды'
 		self.keyboard = keyboard.menu()
+		self.priority = 50
 
 
 	def is_trigger(self, incomming_message):

@@ -35,6 +35,7 @@ class CommandsLoader:
 	def give_commands(self):
 		self.find_files()
 		self.load_modules()
+		self.sort_commands_by_priority()
 		return self.commands
 
 	def find_files(self):
@@ -63,3 +64,6 @@ class CommandsLoader:
 		assert len(module.commands) == 1, f'Module {module} has got commands, wtih len = {len(module.commands)}'
 		for command in module.commands:
 			assert issubclass(command, Command) 
+
+	def sort_commands_by_priority(self):
+		self.commands = sorted(self.commands, key=lambda command: command.priority)
