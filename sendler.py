@@ -8,7 +8,7 @@ class Sendler:
     Этот класс нужен для отправки сообщений через vk_api
     В словарь message нужно заносить данные для отправки 
     вконктате. Процесс запуска фукнций указан в функции 
-    procces. Поэтому нужно смотреть. self.obj это обьект 
+    procces. Поэтому нужно смотреть. self.incomming_message это обьект 
     который присылает вконтакте. Можно посмотреть в 
     документации, что там есть, а можно распечатать на 
     экран. Я дарю вам этот выбор.
@@ -19,18 +19,18 @@ class Sendler:
         self.api = self.session.get_api()
         self.commands = CommandsLoader().give_commands()
 
-    def process(self, obj):
-        self.set_object(obj)
+    def process(self, incomming_message):
+        self.set_incomming_message(incomming_message)
         self.generate_answer()
         self.send_message()
 
-    def set_object(self, obj):
-        self.obj = obj
+    def set_incomming_message(self, incomming_message):
+        self.incomming_message = incomming_message
 
     def generate_answer(self):
         for command in self.commands:
-            if command.is_trigger(self.obj):
-                self.message = command.create_answer_message(self.obj)
+            if command.is_trigger(self.incomming_message):
+                self.message = command.create_answer_message(self.incomming_message)
                 break
 
     def send_message(self):

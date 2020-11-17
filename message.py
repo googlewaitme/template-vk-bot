@@ -22,8 +22,19 @@ class Message:
 		message['attachment'] = self.attachment
 		return message
 
-	def from_longpoll(self, obj):
+
+
+class IncommingMessage(Message):
+	def __init__(self, incomming_message, longpolling=False, callback=False):
+		if longpolling:
+			self.make_from_longpolling(incomming_message)
+		elif callback:
+			self.make_from_callback(incomming_message)
+		else:
+			raise KeyError('Не указано откуда пришло сообщение')
+
+	def make_from_callback(self, message):
 		pass
 
-	def from_callback(self, obj):
-		pass
+	def make_from_longpolling(self, event):
+		super().__init__(event.text, event.user_id)

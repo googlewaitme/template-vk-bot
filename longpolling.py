@@ -2,6 +2,7 @@ import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 from settings import vk_token
 from sendler import Sendler
+from message import IncommingMessage
 
 
 vk = vk_api.VkApi(token=vk_token)
@@ -12,7 +13,5 @@ for event in longpoll.listen():
 
 	if event.type == VkEventType.MESSAGE_NEW:
 		if event.to_me:
-			data = dict()
-			data['body'] = event.text
-			data['user_id'] = event.user_id
-			sendler.process(data)
+			message = IncommingMessage(event, longpolling=True)
+			sendler.process(message)
