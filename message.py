@@ -34,7 +34,9 @@ class IncommingMessage(Message):
 			raise KeyError('Не указано откуда пришло сообщение')
 
 	def make_from_callback(self, message):
-		pass
+		text = message['object']['body']
+		user_id = message['object']['user_id']
+		super().__init__(text, user_id)
 
 	def make_from_longpolling(self, event):
 		super().__init__(event.text, event.user_id)
